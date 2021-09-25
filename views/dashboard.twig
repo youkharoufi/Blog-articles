@@ -1,0 +1,77 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+
+<h1>Welcome to your dashboard {{user.username}}</h1>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="article-tab" data-bs-toggle="tab" data-bs-target="#article" type="button" role="tab" aria-controls="article" aria-selected="false">Articles</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  <h3> Hello {{user.username}} </h3>
+  <p>Paragraphe descriptif</p>
+  </div>
+
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <h3>Profile</h3>
+  <form method="POST" action="/users/save-profile" accept-charset="UTF-8">
+
+  <input type="hidden" name="userId" value="{{user._id}}">
+
+  <label for="firstname">Firstname</label>
+  <input class="form-control" type="text" id="firstname" name="firstname" value="{{user.firstname}}">
+
+  <label for="lastname">Lastname</label>
+  <input class="form-control" type="text" id="lastname" name="lastname" value="{{user.lastname}}">
+
+  <label for="username">Username</label>
+  <input class="form-control" type="text" id="username" name="username" value="{{user.username}}">
+
+  <label for="email">Email</label>
+  <input class="form-control" type="email" id="email" name="email" value="{{user.email}}">
+
+  <button type="submit" class="btn btn-success mt-3">Update Profile</button>
+
+
+  </div>
+  <div class="tab-pane fade" id="article" role="tabpanel" aria-labelledby="article-tab">
+  <h3>My Articles :</h3>
+  
+  {% if articles %}
+  <div>
+        <a href="/add-article" class="btn btn-primary">Add Article</a>
+  <
+    <div class="row">
+      {% for article in articles %}
+      <div class="card col-md-3 m-2" style="width: 18rem;">
+      <img src="{{article.image}}" width="300" height="300" class="card-img-top" alt="{{article.title}}">
+      <div class="card-body">
+      <h5 class="card-title">{{article.title}}</h5>
+      <a href="/article/{{article._id}}" class="btn btn-primary">En savoir plus</a>
+      <a href="/edit-article/{{article._id}}" class="btn btn-primary">Editer</a>
+      <a href="/delete-article/{{article._id}}" class="btn btn-danger">Delete</a>
+      </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <p>You have yet to have published an Article</p>
+  <a href="/add-article" class="btn btn-primary">Add Article</a>
+  {% endif %}
+  </div>
+</div>
+
+
+
+
+
+{% endblock body %}
