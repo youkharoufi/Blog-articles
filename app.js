@@ -12,12 +12,12 @@ var usersRouter = require('./routes/users');
 const passport=require('passport');
 const User=require('./models/user.model');
 const Article=require('./models/article.model');
-
+const dotenv=require('dotenv').config();
 
 var app = express();
 
 app.use(session({
-  secret:'keyboard cat ',
+  secret:"keyboard cat",
   resave:false,
   saveUninitialized:false,
   //cookie:{secure:true}
@@ -25,7 +25,7 @@ app.use(session({
 
 
 const mongoose=require('mongoose');
-mongoose.connect('mongodb+srv://node:node@cluster0.ijzb3.mongodb.net/blog?retryWrites=true&w=majority',{useNewUrlParser:true, useUnifiedTopology:true}).then(()=>console.log('Connexion a mongoDB reussie')).catch(()=>console.log('Echec de la connexion a MongoDB'));
+mongoose.connect(process.env.DATABASE,{useNewUrlParser:true, useUnifiedTopology:true}).then(()=>console.log('Connexion a mongoDB reussie')).catch(()=>console.log('Echec de la connexion a MongoDB'));
 
 /*const category=new Category({
   title:'Diver',

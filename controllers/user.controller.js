@@ -110,7 +110,9 @@ module.exports={
                 return res.render('reset-password');
             })
         },
-        postResetPassword:(req,res,next)=>{
+    
+    
+    postResetPassword:(req,res,next)=>{
             const token = req.params.token;
             const password=req.body.password;
             Reset.findOne({resetPasswordToken:token,resetExpires:{$gt:Date.now()}},(err,reset)=>{
